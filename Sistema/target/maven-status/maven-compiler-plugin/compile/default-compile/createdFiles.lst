@@ -1,0 +1,5 @@
+SIC\SistemasContables\entity\Producto.class
+SIC\SistemasContables\repository\ProductoRepository.class
+SIC\SistemasContables\ServletInitializer.class
+SIC\SistemasContables\controller\ProductoController.class
+SIC\SistemasContables\ContableApplication.class

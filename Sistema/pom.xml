@@ -11,7 +11,7 @@
 	<groupId>SIC</groupId>
 	<artifactId>Sistema</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Contable</name>
 	<description>proyecto para la materia de SIC</description>
 	<properties>
