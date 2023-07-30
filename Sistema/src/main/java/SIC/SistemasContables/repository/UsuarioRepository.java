@@ -10,8 +10,6 @@ import SIC.SistemasContables.entity.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	@Query(value = "SELECT u FROM Usuario u WHERE u.id = id")
-	Usuario getUserById(@Param("id") Long id);
 
 	@Query(value = "SELECT u FROM Usuario u WHERE u.email LIKE %:email% ")
 	Usuario getCredentials(@Param("email") String email);

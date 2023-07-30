@@ -1,16 +1,14 @@
 package SIC.SistemasContables.controller;
 
-import java.sql.SQLException;
-import java.util.Objects;
 
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import SIC.SistemasContables.entity.Response;
 import SIC.SistemasContables.entity.Usuario;
 import SIC.SistemasContables.repository.UsuarioRepository;
@@ -51,29 +49,29 @@ public class AuthController {
 								response.setStatus(true);
 								response.setToken(tokenJwt);
 								response.getDataset().add(returnUser);
-								response.setMessage("Session created successfully!");
+								response.setMessage("Inicio de sesion exitoso!");
 							} else {
-								response.setException("Incorrect password.");
+								response.setException("Contraseña incorrecta.");
 							}
 						} else {
-							response.setException("Your user is inactive.");
+							response.setException("Tu usuario se encuentra inactivo.");
 						}
 					} else {
-						response.setException("Sorry! Looks like this email is not associated to an account.");
+						response.setException("Lo siento! No este correo no esta asociado a una cuenta.");
 					}
 				} else {
-					response.setException("Sorry! Looks like your password is invalid.");
+					response.setException("Lo siento! Tu contraseña es invalida.");
 				}
 			} else {
-				response.setException("Sorry! Looks like your email is invalid.");
+				response.setException("Lo siento! Tu correo es invalido.");
 			}
 		} else {
-			response.setException("Please fill all the fields.");
+			response.setException("Debes llenar todos los campos.");
 		}
 		return response;
 	}
 
-	@RequestMapping(value = "api/register", method = RequestMethod.POST)
+	@RequestMapping(value = "registrar", method = RequestMethod.POST)
 	public Response registerUser(@RequestBody Usuario user) {
 		initializeResponse();
 		if (stringValidation.validateAlphabetic(user.getNombre(), 40)) {
@@ -88,31 +86,58 @@ public class AuthController {
 							try {
 								userRepository.save(user);
 								response.setStatus(true);
-								response.setMessage("Registered successfully");
+								response.setMessage("Registro exitosamente");
 								response.setStatus(true);
 							} catch (Exception ex) {
 								response.setException(ex.getMessage());
 							}
 						} else {
 							response.setException(
-									"Invalid password. Please check that your password satisfies all the requirements.");
+									"Contraseña invalida. Por favor verifica las condiciones.");
 						}
 					} else {
-						response.setException("Invalid email.");
+						response.setException("Correo invalido.");
 					}
 				} else {
-					response.setException("Invalid phone number.");
+					response.setException("Numero de telefono invalido.");
 				}
 			} else {
-				response.setException("Invalid username.");
+				response.setException("Nombre de usuario invalido.");
 			}
 		} else {
-			response.setException("Invalid name.");
+			response.setException("Nombre invalido.");
 		}
 
 		return response;
 	}
 
+	
+
+   /* @GetMapping("resetPassword")
+    public Response resetPassword(@RequestHeader(value="Authorization") String token, @RequestParam Long id){
+        initializeResponse();
+        if (!validateToken.validateToken(token)) {
+            response.setException("Unauthorized access.");
+        } else {
+            if (validateToken.userDB().getId_rol() == 1) {
+                if (userRepository.existsById(id)) {
+                    User user = userRepository.findById(id).get();
+                    Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+                    String hash = argon2.hash(1, 1024, 1, "Pass123@");
+                    user.setPassword(hash);
+                    userRepository.save(user);
+                    response.setStatus(true);
+                    response.setMessage("Password has been changed to Pass123@, change it after you get logged in.");
+                } else {
+                    response.setException("The id that you set does not exists.");
+                }
+            } else {
+                response.setException("You are not manager");
+            }
+        }
+        return response;
+    }*/
+	
 	public void initializeResponse() {
 		this.response = new Response();
 	}
