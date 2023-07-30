@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import SIC.SistemasContables.entity.Producto;
+import SIC.SistemasContables.entity.Usuario;
 import SIC.SistemasContables.repository.ProductoRepository;
+import SIC.SistemasContables.utils.ValidateToken;
 
 @Controller
 @RequestMapping("/api")
@@ -19,11 +22,8 @@ public class VistasController {
 
 	@Autowired
 	private ProductoRepository productosRepository;
-
-	@GetMapping("/inicio")
-	public String index() {
-		return "index";
-	}
+	@Autowired
+	private ValidateToken validateToken;
 
 	@GetMapping("/agregarproducto")
 	public String agregarProducto(Model model) {
@@ -41,16 +41,40 @@ public class VistasController {
 	public String guardarProducto(@ModelAttribute Producto producto, BindingResult bindingResult,
 			RedirectAttributes redirectAttrs) {
 		if (bindingResult.hasErrors()) {
-			return "productos/agregar_producto";//redirige a la pagina html en la ubicacion productos/agregar_producto.html
+			return "productos/agregar_producto";// redirige a la pagina html en la ubicacion
+												// productos/agregar_producto.html
 		}
 		if (productosRepository.findFirstByCodigo(producto.getCodigo()) != null) {
 			redirectAttrs.addFlashAttribute("mensaje", "Ya existe un producto con ese código")
 					.addFlashAttribute("clase", "warning");
-			return "redirect:/api/agregarproducto";//redirige al endpoint /api/agregarproducto
+			return "redirect:/api/agregarproducto";// redirige al endpoint /api/agregarproducto
 		}
 		productosRepository.save(producto);
 		redirectAttrs.addFlashAttribute("mensaje", "Agregado correctamente").addFlashAttribute("clase", "success");
-		return "redirect:/api/productos/mostrar";//redirige al endpoint /api/productos/mostrar"
+		return "redirect:/api/productos/mostrar";// redirige al endpoint /api/productos/mostrar"
 	}
 
+	/*---------------Vistas para el manejos de sesion------*/
+
+	@GetMapping("/login")
+	public String index() {
+		return "index";
+	}
+
+	@GetMapping("/registrar")
+	public String registrar() {
+		return "registrarUsuario";
+	}
+
+	/*-------------------------dashboard----------------------*/
+	@GetMapping("/inicio")
+	public String inicio(@RequestParam(name = "token", required = false) String token, Model model) {
+		if (validateToken.validateToken(token)) {
+			Usuario userDB = validateToken.userDB();
+			model.addAttribute(userDB);
+			return "master";
+		} else {
+			return "redirect:/api/login";
+		}
+	}
 }

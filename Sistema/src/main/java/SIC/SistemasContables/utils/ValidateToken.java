@@ -27,6 +27,6 @@ public class ValidateToken {
 	}
 
 	public Usuario userDB() {
-		return usuarioRepository.getUserById(userId);
+		return usuarioRepository.getReferenceById(userId);
 	}
 }
