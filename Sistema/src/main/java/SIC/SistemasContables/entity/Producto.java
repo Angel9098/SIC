@@ -1,5 +1,7 @@
 package SIC.SistemasContables.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +13,17 @@ import lombok.Data;
 
 @Entity
 @Table(name = "producto")
-public class Producto {
+public class Producto implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	private String nombre;
 
@@ -26,7 +33,7 @@ public class Producto {
 
 	private Float existencia;
 
-	public Producto(String nombre, String codigo, Float precio, Float existencia, Integer id) {
+	public Producto(String nombre, String codigo, Float precio, Float existencia, Long id) {
 		this.nombre = nombre;
 		this.codigo = codigo;
 		this.precio = precio;
@@ -88,11 +95,11 @@ public class Producto {
 		this.nombre = nombre;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 }
