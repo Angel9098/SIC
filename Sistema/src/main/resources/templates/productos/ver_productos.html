@@ -36,7 +36,7 @@
 							<td th:text="${producto.precio}"></td>
 							<td th:text="${producto.existencia}"></td>
 							<td>
-								<a class="btn btn-warning" th:href="@{/productos/editar/} + ${producto.id}">Editar <i
+								<a class="btn btn-warning" th:href="@{/api/productos/editar/} + ${producto.id}">Editar <i
 										class="fa fa-edit"></i></a>
 							</td>
 							<td>
@@ -57,3 +57,60 @@
 </body>
 
 </html>
+
+<script>
+	document.getElementById("login-form").addEventListener("submit", function (event) {
+		event.preventDefault();
+
+		const formData = new FormData(event.target);
+		const data = {};
+		formData.forEach((value, key) => {
+			data[key] = value;
+		});
+
+		fetch(event.target.action, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		})
+			.then(response => response.json())
+			.then(data => {
+
+				// Aquí manejar la respuesta del backend
+				if (data.exception) {
+					// Si hay una excepción, muestra un SweetAlert de error con el mensaje de excepción
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: data.exception,
+					});
+				} else if (data.message) {
+					// Si hay un mensaje, muestra un SweetAlert de éxito con el mensaje
+					Swal.fire({
+						icon: 'success',
+						title: 'Éxito',
+						text: data.message,
+					}).then(() => {
+						if (data.token) {
+							window.location.href = `/api/inicio?token=${data.token}`;
+						} else {
+							window.location.href = "/api/login";
+						}
+					});
+				} else {
+					// Si no hay ni excepción ni mensaje, muestra un SweetAlert de error genérico
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: 'La respuesta del servidor es inválida.',
+					});
+				}
+			})
+			.catch(error => {
+				// Aquí puedes manejar el error
+				console.error(error);
+			});
+	});
+</script>

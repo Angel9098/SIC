@@ -10,11 +10,13 @@
 	<nav th:replace="layouts/navbar :: navbar"></nav>
 	<main layout:fragment="contenido">
 		<div class="col-12">
-			<h2>Agregar producto</h2>
 			<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
 				th:text="${mensaje}" class="alert">
 			</div>
-			<form style="width: 30%; " th:object="${producto}" th:action="@{/api/productos/agregar}" method="post">
+			<form style="width: 30%;  margin: 0 auto;" th:object="${producto}" th:action="@{/api/productos/agregar}"
+				method="post">
+
+				<h2>Agregar producto</h2>
 				<div class="form-group">
 					<label for="nombre">Nombre del producto</label>
 					<input autocomplete="off" autofocus th:field="*{nombre}" id="nombre"

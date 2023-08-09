@@ -1,11 +1,14 @@
 package SIC.SistemasContables.controller;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +55,17 @@ public class VistasController {
 		productosRepository.save(producto);
 		redirectAttrs.addFlashAttribute("mensaje", "Agregado correctamente").addFlashAttribute("clase", "success");
 		return "redirect:/api/productos/mostrar";// redirige al endpoint /api/productos/mostrar"
+	}
+
+	@GetMapping(value = "/productos/editar/{id}")
+	public String mostrarFormularioEditar(@RequestParam(name = "token", required = false) String token,
+			@PathVariable int id, Model model) {
+		if (validateToken.validateToken(token)) {
+			model.addAttribute("producto", productosRepository.findById(id).orElse(null));
+			return "productos/editar_producto";
+		} else {
+			return "redirect:/api/login";
+		}
 	}
 
 	/*---------------Vistas para el manejos de sesion------*/

@@ -19,3 +19,4 @@ services:
       MYSQL_USER: contable01
       MYSQL_PASSWORD: contable01
       MYSQL_ROOT_PASSWORD: contable01
+
