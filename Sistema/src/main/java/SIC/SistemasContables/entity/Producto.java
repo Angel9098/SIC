@@ -23,7 +23,7 @@ public class Producto implements Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 
 	private String nombre;
 
@@ -33,7 +33,7 @@ public class Producto implements Serializable {
 
 	private Float existencia;
 
-	public Producto(String nombre, String codigo, Float precio, Float existencia, Long id) {
+	public Producto(String nombre, String codigo, Float precio, Float existencia, Integer id) {
 		this.nombre = nombre;
 		this.codigo = codigo;
 		this.precio = precio;
@@ -95,11 +95,11 @@ public class Producto implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 }

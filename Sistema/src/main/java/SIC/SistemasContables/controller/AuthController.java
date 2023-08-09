@@ -57,7 +57,7 @@ public class AuthController {
 							response.setException("Tu usuario se encuentra inactivo.");
 						}
 					} else {
-						response.setException("Lo siento! No este correo no esta asociado a una cuenta.");
+						response.setException("Lo siento! Este correo no esta asociado a una cuenta.");
 					}
 				} else {
 					response.setException("Lo siento! Tu contraseña es invalida.");
