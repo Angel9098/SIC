@@ -28,8 +28,8 @@ public class ProductoController {
 	private ProductoRepository productosRepository;
 
 	@PostMapping(value = "/editar/{id}")
-	public String actualizarProducto(@RequestParam(name = "token", required = false) String token,
-			@ModelAttribute Producto producto, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
+	public String actualizarProducto(@ModelAttribute Producto producto, BindingResult bindingResult,
+			RedirectAttributes redirectAttrs) {
 		if (bindingResult.hasErrors()) {
 			if (producto.getId() != null) {
 				return "productos/editar_producto";
@@ -47,8 +47,5 @@ public class ProductoController {
 		redirectAttrs.addFlashAttribute("mensaje", "Editado correctamente").addFlashAttribute("clase", "success");
 		return "redirect:/api/productos/mostrar";
 	}
-
-
-
 
 }

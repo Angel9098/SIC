@@ -8,16 +8,34 @@
 		var token = localStorage.getItem('token');
 	</script>
 	<div class="collapse navbar-collapse" id="menu">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/api/vender/}">Vender</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/api/productos/mostrar}">Productos</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/api/ventas/mostrar}">Ventas</a>
-			</li>
-		</ul>
-	</div>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/vender/}">Vender</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/productos/mostrar}">Catálogo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/ventas/mostrar}">Ventas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/libro/contribuyente}">Libro contribuyente</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/libro/consumidor}">Libro de ventas a consumidor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/libro/compras}">Libro de compras</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/libro/partida}">Partida</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/api/salir}">Salir</a>
+        </li>
+    </ul>
+</div>
+
 </nav>

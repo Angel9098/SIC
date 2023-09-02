@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="master">
+
+<head th:replace="layouts/encabezado :: encabezado">
+	<link href="../../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	</link>
+
+</head>
+
+<body>
+	<nav th:replace="layouts/navbar :: navbar"></nav>
+
+	<main layout:fragment="contenido">
+
+		<div class="row" style="margin-bottom: 20px;">
+			<div class="col-6">
+				<h4>Libro de ventas al contribuyente</h4>
+				<div>
+					<label for="mes">Mes:</label>
+					<select id="mes" onchange="crearJSON()">
+						<option value="1">Enero</option>
+						<option value="2">Febrero</option>
+						<!-- Agrega más opciones de meses aquí -->
+					</select>
+
+					<label for="anio" style="margin-left: 5%;">Año:</label>
+					<select id="anio" onchange="crearJSON()">
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+					</select>
+					<a class="btn btn-success mb-2" style="margin-left: 5%"
+						th:href="@{/api/agregarproducto}">Aceptar</a>
+
+				</div>
+
+				<div style="margin-bottom: 20px;">
+					<label for="resolucion">Resolucion:</label>
+					<input type="text" id="resolucion">
+
+					<label for="serie" style="margin-left: 5%;">Serie:</label>
+					<input type="text" id="serie">
+
+					<a class="btn btn-success mb-2" style="margin-left: 5%"
+						th:href="@{/api/agregarproducto}">Aceptar</a>
+				</div>
+
+				<div style="margin-bottom: 20px;">
+					<label for="clase">Clase:</label>
+					<select id="clase" style="width: 40%; padding: 11px; font-size: 6px;">
+						<!--se llenan del endpoint-->
+					</select>
+
+					<label for="tipo" style="margin-left: 5%;">Tipo:</label>
+					<select id="tipo" style="width: 40%; padding: 11px; font-size: 6px;">
+						<!--se llenan del endpoint-->
+					</select>
+				</div>
+
+				<div style="margin-bottom: 20px;">
+					<label for="numero">No:</label>
+					<input type="text" style="width: 8%; " id="numero">
+
+					<label for="fecha" style="margin-left: 5%;">Fecha:</label>
+					<input type="date" style="width: 15%;" id="fecha">
+
+					<label for="ccf" style="margin-left: 5%;">No. CCF:</label>
+					<input type="text" style="width: 10%;" id="ccf">
+
+					<label for="nrc" style="margin-left: 5%;">NRC:</label>
+					<input type="text" style="width: 12%;" id="nrc">
+
+				</div>
+				<div style="margin-bottom: 20px;">
+					<label for="nombre_cliente">Proveedor:</label>
+					<input type="text" style="width: 60%; " id="nombre_cliente">
+
+				</div>
+				<div style="margin-bottom: 20px;">
+					<label for="nit" style="margin-left: 10%;">NIT:</label>
+					<input type="text" id="nombre_cliente">
+					<label for="serie">Serie:</label>
+					<input type="text" id="nombre_cliente">
+
+				</div>
+				<div style="margin-bottom: 20px;">
+					<a class="btn btn-primary mb-2" style="margin-left: 5%;"
+						th:href="@{/api/agregarproducto}">Regresar</a>
+
+					<a class="btn btn-warning mb-2" style="margin-left: 8%;"
+						th:href="@{/api/agregarproducto}">Limpiar</a>
+
+					<a class="btn btn-danger mb-2" style="margin-left: 10%;"
+						th:href="@{/api/agregarproducto}">Eliminar</a>
+
+					<a class="btn btn-success mb-2" style="margin-left: 12%;"
+						th:href="@{/api/agregarproducto}">Guardar</a>
+				</div>
+			</div>
+
+			<div class="col-2.5"
+				style="border: 1px solid black; padding: 15px; margin-bottom: 20px; border-radius: 10px; margin-right: 10px;">
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="gravadas">Gravadas:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="gravadas">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="gravadas">Internaciones:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="internaciones">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="exentas">Exentas:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="exentas">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="ivaDF">IVA CF:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="ivaCF">
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="ivaDF">IVA Percibido:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="ivaPer">
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-1">
+
+					</div>
+					<div class="col-4" style="margin-bottom: 20px;">
+						<label for="exentatot">Venta total:</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="exentas">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-2.5" style="border: 1px solid black; margin-bottom: 20px; padding: 15px; border-radius: 10px;">
+				<h4>TOTALES</h4>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="gravadas">Excentas$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="excentas">
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="gravadas">Internac.$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="internacion">
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="gravadas">Gravadas$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="gravadas">
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="debitoFis">IVA CF$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="debitoFis">
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="gravadas">Percibido$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="percibido">
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-5" style="margin-bottom: 20px;">
+						<label for="ventaTot">Total$</label>
+					</div>
+					<div class="col-5" style="margin-bottom: 20px;">
+						<input type="text" id="ventaTot">
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="col-12">
+				<div class="table-responsive">
+				<table class="table table-bordered table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<th>Codigo</th>
+								<th>Nombre</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="producto : ${productos}">
+								<td th:text="${producto.nombre}"></td>
+								<td th:text="${producto.codigo}"></td>
+								<td>
+									<a class="btn btn-warning"
+										th:href="@{/api/productos/editar/} + ${producto.id}">Editar
+										<i class="fa fa-edit"></i></a>
+								</td>
+								<td>
+									<form th:action="@{/productos/eliminar}" method="post">
+										<input type="hidden" name="id" th:value="${producto.id}" />
+										<button type="submit" class="btn btn-danger">Eliminar <i
+												class="fa fa-trash"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+
+			</div>
+
+	</main>
+	<footer th:replace="layouts/pie :: pie"></footer>
+
+</body>
+
+</html>
+<script>
+	window.onload = function () {
+		llenarSelect('/categoria/clase', 'clase');
+		llenarSelect('/categoria/tipo', 'tipo');
+	}
+
+	function llenarSelect(endpoint, selectId) {
+		fetch(endpoint)
+			.then(response => response.json())
+			.then(data => {
+				var select = document.getElementById(selectId);
+				select.innerHTML = "";
+
+				data.forEach(option => {
+					var optionElement = document.createElement("option");
+					optionElement.value = option.codigo;
+					optionElement.text = option.descripcion;
+					select.appendChild(optionElement);
+				});
+			})
+			.catch(error => console.error("Error al cargar opciones: ", error));
+	}
+
+	function crearJSON() {
+		var mes = document.getElementById("mes").value;
+		var anio = document.getElementById("anio").value;
+		var resolucion = document.getElementById("resolucion").value;
+		var serie = document.getElementById("serie").value;
+		var clase = document.getElementById("clase").value;
+		var tipo = document.getElementById("tipo").value;
+
+		var json = {
+			"mes": mes,
+			"anio": anio,
+			"resolucion": resolucion,
+			"serie": serie,
+			"clase": clase,
+			"tipo": tipo
+
+		};
+
+		var jsonString = JSON.stringify(json);
+
+		console.log(jsonString);
+
+	}
+</script>

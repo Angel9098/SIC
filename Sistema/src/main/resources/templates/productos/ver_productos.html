@@ -12,44 +12,45 @@
 
 	<main layout:fragment="contenido">
 		<div class="col-12">
-			<h2>Productos</h2>
+			<h2>Catalogo productos</h2>
 			<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
 				th:text="${mensaje}" class="alert">
 			</div>
 			<a class="btn btn-success mb-2" th:href="@{/api/agregarproducto}">Agregar</a>
 			<div class="table-responsive">
-				<table class="table table-bordered">
-					<thead>
+				<table class="table table-bordered table-striped">
+					<thead class="thead-dark">
 						<tr>
-							<th>Nombre</th>
-							<th>Código</th>
-							<th>Precio</th>
-							<th>Existencia</th>
-							<th>Editar</th>
-							<th>Eliminar</th>
+							<th class="text-center">Nombre</th>
+							<th class="text-center">Código</th>
+							<th class="text-center">Precio</th>
+							<th class="text-center">Existencia</th>
+							<th class="text-center">Editar</th>
+							<th class="text-center">Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="producto : ${productos}">
-							<td th:text="${producto.nombre}"></td>
-							<td th:text="${producto.codigo}"></td>
-							<td th:text="${producto.precio}"></td>
-							<td th:text="${producto.existencia}"></td>
-							<td>
-								<a class="btn btn-warning" th:href="@{/api/productos/editar/} + ${producto.id}">Editar <i
-										class="fa fa-edit"></i></a>
+							<td class="text-center" th:text="${producto.nombre}"></td>
+							<td class="text-center" th:text="${producto.codigo}"></td>
+							<td class="text-center" th:text="${producto.precio}"></td>
+							<td class="text-center" th:text="${producto.existencia}"></td>
+							<td class="text-center">
+								<a class="btn btn-warning" th:href="@{/api/productos/editar/} + ${producto.id}">Editar
+									<i class="fa fa-edit"></i></a>
 							</td>
-							<td>
+							<td class="text-center">
 								<form th:action="@{/productos/eliminar}" method="post">
 									<input type="hidden" name="id" th:value="${producto.id}" />
-									<button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
-									</button>
+									<button type="submit" class="btn btn-danger">Eliminar <i
+											class="fa fa-trash"></i></button>
 								</form>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+
 		</div>
 	</main>
 	<footer th:replace="layouts/pie :: pie"></footer>
@@ -57,60 +58,3 @@
 </body>
 
 </html>
-
-<script>
-	document.getElementById("login-form").addEventListener("submit", function (event) {
-		event.preventDefault();
-
-		const formData = new FormData(event.target);
-		const data = {};
-		formData.forEach((value, key) => {
-			data[key] = value;
-		});
-
-		fetch(event.target.action, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		})
-			.then(response => response.json())
-			.then(data => {
-
-				// Aquí manejar la respuesta del backend
-				if (data.exception) {
-					// Si hay una excepción, muestra un SweetAlert de error con el mensaje de excepción
-					Swal.fire({
-						icon: 'error',
-						title: 'Error',
-						text: data.exception,
-					});
-				} else if (data.message) {
-					// Si hay un mensaje, muestra un SweetAlert de éxito con el mensaje
-					Swal.fire({
-						icon: 'success',
-						title: 'Éxito',
-						text: data.message,
-					}).then(() => {
-						if (data.token) {
-							window.location.href = `/api/inicio?token=${data.token}`;
-						} else {
-							window.location.href = "/api/login";
-						}
-					});
-				} else {
-					// Si no hay ni excepción ni mensaje, muestra un SweetAlert de error genérico
-					Swal.fire({
-						icon: 'error',
-						title: 'Error',
-						text: 'La respuesta del servidor es inválida.',
-					});
-				}
-			})
-			.catch(error => {
-				// Aquí puedes manejar el error
-				console.error(error);
-			});
-	});
-</script>

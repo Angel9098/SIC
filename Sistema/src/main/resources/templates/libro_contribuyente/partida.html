@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="master">
+
+<head th:replace="layouts/encabezado :: encabezado">
+	<link href="../../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	</link>
+
+</head>
+
+<body>
+	<nav th:replace="layouts/navbar :: navbar"></nav>
+
+	<main layout:fragment="contenido">
+
+		<div class="container" style="margin-bottom: 20px;">
+			<h3 style="margin-bottom: 20px;">Descripcion general del producto</h3>
+			<div class="row">
+				<div class="col-1">
+					<label for="codigo">Codigo:</label>
+				</div>
+				<div class="col-2">
+					<input style="width: 200%;" type="text" id="codigo">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-1">
+					<label for="descripcion">Descripcion:</label>
+				</div>
+				<div class="col-2">
+					<input style="width: 200%;" type="text" id="descripcion">
+				</div>
+			</div>
+		</div>
+		<div class="container" style="margin-bottom: 20px;">
+			<a class="btn btn-warning" style="margin-left: 8%;" th:href="@{/api/agregarproducto}">Limpiar</a>
+
+			<a class="btn btn-success" style="margin-left: 12%;" th:href="@{/api/agregarproducto}">Guardar</a>
+		</div>
+
+
+		<div class="container">
+			<div class="col-12">
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<th>Código</th>
+								<th>Nombre</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="producto : ${productos}">
+								<td th:text="${producto.codigo}"></td>
+								<td th:text="${producto.nombre}"></td>
+								<td>
+									<a class="btn btn-warning btn-sm"
+										th:href="@{/api/productos/editar/} + ${producto.id}">
+										Editar <i class="fa fa-edit"></i>
+									</a>
+									<form th:action="@{/productos/eliminar}" method="post" style="display: inline;">
+										<input type="hidden" name="id" th:value="${producto.id}" />
+										<button type="submit" class="btn btn-danger btn-sm">Eliminar <i
+												class="fa fa-trash"></i></button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<footer th:replace="layouts/pie :: pie"></footer>
+
+</body>
+
+</html>
+<script>
+	window.onload = function () {
+		llenarSelect('/categoria/clase', 'clase');
+		llenarSelect('/categoria/tipo', 'tipo');
+	}
+
+	function llenarSelect(endpoint, selectId) {
+		fetch(endpoint)
+			.then(response => response.json())
+			.then(data => {
+				var select = document.getElementById(selectId);
+				select.innerHTML = "";
+
+				data.forEach(option => {
+					var optionElement = document.createElement("option");
+					optionElement.value = option.codigo;
+					optionElement.text = option.descripcion;
+					select.appendChild(optionElement);
+				});
+			})
+			.catch(error => console.error("Error al cargar opciones: ", error));
+	}
+
+	function crearJSON() {
+		var mes = document.getElementById("mes").value;
+		var anio = document.getElementById("anio").value;
+		var resolucion = document.getElementById("resolucion").value;
+		var serie = document.getElementById("serie").value;
+		var clase = document.getElementById("clase").value;
+		var tipo = document.getElementById("tipo").value;
+
+		var json = {
+			"mes": mes,
+			"anio": anio,
+			"resolucion": resolucion,
+			"serie": serie,
+			"clase": clase,
+			"tipo": tipo
+
+		};
+
+		var jsonString = JSON.stringify(json);
+
+		console.log(jsonString);
+
+	}
+</script>

@@ -1,5 +1,7 @@
 package SIC.SistemasContables.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,12 +62,9 @@ public class VistasController {
 	@GetMapping(value = "/productos/editar/{id}")
 	public String mostrarFormularioEditar(@RequestParam(name = "token", required = false) String token,
 			@PathVariable int id, Model model) {
-		if (validateToken.validateToken(token)) {
-			model.addAttribute("producto", productosRepository.findById(id).orElse(null));
-			return "productos/editar_producto";
-		} else {
-			return "redirect:/api/login";
-		}
+		model.addAttribute("producto", productosRepository.findById(id).orElse(null));
+		return "productos/editar_producto";
+
 	}
 
 	/*---------------Vistas para el manejos de sesion------*/
@@ -90,5 +89,36 @@ public class VistasController {
 		} else {
 			return "redirect:/api/login";
 		}
+	}
+
+	@GetMapping("/libro/contribuyente")
+	public String vistaContribuyente() {
+		return "libro_contribuyente/libroContribuyente";
+	}
+
+	@GetMapping("/libro/consumidor")
+	public String libroConsumidor() {
+		return "libro_contribuyente/libro_consumidor";
+	}
+
+	@GetMapping("/libro/compras")
+	public String libroCompras() {
+		return "libro_contribuyente/libro_compras";
+	}
+
+	@GetMapping("/libro/partida")
+	public String partida() {
+		return "libro_contribuyente/partida";
+	}
+
+	@GetMapping("/salir")
+	public String logout(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		
+		redirectAttributes.addFlashAttribute("message", "¡Has cerrado sesión exitosamente!");
+		return "redirect:/api/login"; 
 	}
 }
