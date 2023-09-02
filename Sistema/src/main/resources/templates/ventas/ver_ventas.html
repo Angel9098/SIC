@@ -19,8 +19,8 @@
 			</div>
 			<a class="btn btn-success mb-2" th:href="@{/api/vender/}">Agregar</a>
 			<div class="table-responsive">
-				<table class="table table-bordered">
-					<thead>
+				<table class="table table-bordered table-striped">
+					<thead class="thead-dark">
 						<tr>
 							<th>Fecha</th>
 							<th>Total</th>
@@ -32,8 +32,8 @@
 							<td th:text="${venta.fechaYHora}"></td>
 							<td th:text="${venta.total}"></td>
 							<td>
-								<table class="table table-bordered">
-									<thead>
+								<table class="table table-bordered table-striped">
+									<thead style="background-color: aqua;">
 										<tr>
 											<th>Nombre</th>
 											<th>Código de barras</th>
@@ -57,7 +57,7 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 		</div>
 	</main>
 	<footer th:replace="layouts/pie :: pie"></footer>

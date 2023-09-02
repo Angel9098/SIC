@@ -14,32 +14,74 @@
 	<main layout:fragment="contenido">
 
 		<div class="container" style="margin-bottom: 20px;">
-			<h3 style="margin-bottom: 20px;">Descripcion general del producto</h3>
+			<h3 style="margin-bottom: 20px;">Ingreso de partida diario</h3>
 			<div class="row">
-				<div class="col-1">
-					<label for="codigo">Codigo:</label>
+				<div class="col-7">
+					<div class="row">
+						<div class="col-2">
+							<label for="codigo">No Partida:</label>
+						</div>
+						<div class="col-4">
+							<input style="width: 50%;" type="text" id="codigo">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<label for="codigo">Fecha</label>
+						</div>
+						<div class="col-4">
+							<input style="width: 100%;" type="date" id="codigo">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<label for="descripcion">Descripcion:</label>
+						</div>
+						<div class="col-4">
+							<input style="width: 200%;" type="text" id="descripcion">
+						</div>
+					</div>
 				</div>
-				<div class="col-2">
-					<input style="width: 200%;" type="text" id="codigo">
+
+				<div class="col-5">
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-6">
+
+							<div class="row">
+								<div class="col-4">
+									<label for="debe">Debe:</label>
+								</div>
+								<div class="col-8">
+									<input style="width: 75%;" type="text" id="debe">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<div class="col-4">
+									<label for="debe">Haber:</label>
+								</div>
+								<div class="col-8">
+									<input style="width: 75%;" type="text" id="debe">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">
+							<label for="debe">Diferencia:</label>
+						</div>
+						<div class="col-8">
+							<input style="width: 75%;" type="text" id="debe">
+						</div>
+					</div>
 				</div>
+
 			</div>
-			<div class="row">
-				<div class="col-1">
-					<label for="descripcion">Descripcion:</label>
-				</div>
-				<div class="col-2">
-					<input style="width: 200%;" type="text" id="descripcion">
-				</div>
-			</div>
+
 		</div>
+
 		<div class="container" style="margin-bottom: 20px;">
-			<a class="btn btn-warning" style="margin-left: 8%;" th:href="@{/api/agregarproducto}">Limpiar</a>
-
-			<a class="btn btn-success" style="margin-left: 12%;" th:href="@{/api/agregarproducto}">Guardar</a>
-		</div>
-
-
-		<div class="container">
 			<div class="col-12">
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped">
@@ -71,6 +113,15 @@
 				</div>
 			</div>
 		</div>
+		<div class="container">
+
+			<div class="float-right">
+				<a class="btn btn-primary" th:href="@{/api/agregarproducto}">Imprimir</a>
+
+				<a class="btn btn-success" th:href="@{/api/agregarproducto}">Guardar</a>
+			</div>
+		</div>
+
 
 	</main>
 	<footer th:replace="layouts/pie :: pie"></footer>
