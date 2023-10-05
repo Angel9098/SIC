@@ -87,23 +87,20 @@
 					<table class="table table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
-								<th>Código</th>
-								<th>Nombre</th>
-								<th>Acciones</th>
+								<th class="text-center">Código</th>
+								<th class="text-center">Nombre</th>
+								<th class="text-center">Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="producto : ${productos}">
-								<td th:text="${producto.codigo}"></td>
-								<td th:text="${producto.nombre}"></td>
+							<tr th:each="partida : ${partidas}">
+								<td class="text-center" th:text="${partida.codigo}"></td>
+								<td class="text-center" th:text="${partida.nombre}"></td>
 								<td>
-									<a class="btn btn-warning btn-sm"
-										th:href="@{/api/productos/editar/} + ${producto.id}">
-										Editar <i class="fa fa-edit"></i>
-									</a>
-									<form th:action="@{/productos/eliminar}" method="post" style="display: inline;">
-										<input type="hidden" name="id" th:value="${producto.id}" />
-										<button type="submit" class="btn btn-danger btn-sm">Eliminar <i
+									<form class="text-center" th:action="@{/productos/eliminar}" method="post"
+										style="display: inline;">
+										<input type="hidden" name="id" th:value="${partida.id}" />
+										<button type="submit" class="btn btn-danger btn-sm ">Eliminar <i
 												class="fa fa-trash"></i></button>
 									</form>
 								</td>

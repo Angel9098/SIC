@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import SIC.SistemasContables.entity.Producto;
 import SIC.SistemasContables.entity.Usuario;
+import SIC.SistemasContables.repository.PartidaRepository;
 import SIC.SistemasContables.repository.ProductoRepository;
 import SIC.SistemasContables.utils.ValidateToken;
 
@@ -27,6 +28,8 @@ public class VistasController {
 
 	@Autowired
 	private ProductoRepository productosRepository;
+	@Autowired
+	PartidaRepository partidaRepository;
 	@Autowired
 	private ValidateToken validateToken;
 
@@ -107,7 +110,9 @@ public class VistasController {
 	}
 
 	@GetMapping("/libro/partida")
-	public String partida() {
+	public String partida(Model model) {
+		model.addAttribute("partidas", partidaRepository.findAll());
+
 		return "libro_contribuyente/partida";
 	}
 
@@ -117,8 +122,8 @@ public class VistasController {
 		if (session != null) {
 			session.invalidate();
 		}
-		
+
 		redirectAttributes.addFlashAttribute("message", "¡Has cerrado sesión exitosamente!");
-		return "redirect:/api/login"; 
+		return "redirect:/api/login";
 	}
 }

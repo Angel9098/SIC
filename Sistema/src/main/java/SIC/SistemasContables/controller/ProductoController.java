@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +28,18 @@ public class ProductoController {
 	@Autowired
 	private ProductoRepository productosRepository;
 
+	private static final String AUTH_HEADER_PREFIX = "Bearer ";
+
+	@Autowired
+	private AuthController authController;
+
 	@PostMapping(value = "/editar/{id}")
-	public String actualizarProducto(@ModelAttribute Producto producto, BindingResult bindingResult,
-			RedirectAttributes redirectAttrs) {
+	public String actualizarProducto(@RequestHeader(value = "authorization", required = false) String token,
+			@ModelAttribute Producto producto, BindingResult bindingResult, RedirectAttributes redirectAttrs) {
+
+		token = token.substring(AUTH_HEADER_PREFIX.length());
+
+		String token1 = authController.updateTokenWithNewClaim(token, "2");
 		if (bindingResult.hasErrors()) {
 			if (producto.getId() != null) {
 				return "productos/editar_producto";
@@ -46,6 +56,14 @@ public class ProductoController {
 		productosRepository.save(producto);
 		redirectAttrs.addFlashAttribute("mensaje", "Editado correctamente").addFlashAttribute("clase", "success");
 		return "redirect:/api/productos/mostrar";
+	}
+
+	@PostMapping(value = "/probar")
+	public String act(@RequestHeader(value = "authorization", required = false) String token) {
+		token = token.substring(AUTH_HEADER_PREFIX.length());
+
+		String token1 = authController.updateTokenWithNewClaim(token, "2");
+		return "";
 	}
 
 }
